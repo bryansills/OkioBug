@@ -2,8 +2,6 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-	let greet = Greeting().greeting()
-
 	@State private var buttonTitle = "EMPTY"
 
 	var body: some View {
@@ -16,18 +14,12 @@ struct ContentView: View {
                 let dateString = formatter.string(from: currentDateTime)
 
                 let filename = getDocumentsDirectory().appendingPathComponent("output.txt")
+                
+                let fileManager = OkioFileManagerFactory(absoluteFilePath: filename.absoluteString).create()
 
-                do {
-                    try dateString.write(to: filename, atomically: true, encoding: String.Encoding.utf8)
-                } catch { /* WHOOPS */}
-
-                do {
-                    let fileText = try String(contentsOf: filename, encoding: .utf8)
-                    buttonTitle = fileText
-                }
-                catch {/* error handling here */}
+                fileManager.append(newText: dateString)
+                buttonTitle = fileManager.read()
             }
-            Text(greet)
         }
 	}
 
