@@ -14,6 +14,7 @@ allprojects {
     repositories {
         google()
         mavenCentral()
+        maven(url = "https://androidx.dev/snapshots/builds/7599071/artifacts/repository")
     }
 }
 
